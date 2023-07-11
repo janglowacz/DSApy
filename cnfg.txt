@@ -1,0 +1,7 @@
+Version: A0.1
+Version_full: A0.1_20230711
+
+Character: C:\Users\Jan\Desktop\DSApy\Theariel.json
+
+Advantage_Range_Talent_Min: -6
+Advantage_Range_Talent_Max: +6
