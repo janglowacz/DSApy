@@ -9,6 +9,8 @@ FS = ('Consolas', SCALE*10)
 FM = ('Consolas', SCALE*12)
 FL = ('Consolas', SCALE*15)
 FH = ('Consolas', SCALE*25)
+FXH = ('Consolas', SCALE*50)
+FXXH = ('Consolas', SCALE*100)
 
 PAD = (1,1)
 
