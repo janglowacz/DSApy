@@ -1,7 +1,9 @@
-Version: A0.1
-Version_full: A0.1_20230711
+Version: A0.2
+Version_full: A0.2_20230712
 
-Character: C:\Users\Jan\Desktop\DSApy\Theariel.json
+Character: C:\Users\Jan\Desktop\Everything\P&P\DSA\DSApy\Theariel.json
 
 Advantage_Range_Talent_Min: -6
 Advantage_Range_Talent_Max: +6
+
+Talent_Routine_Unlock: False

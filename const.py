@@ -99,12 +99,22 @@ def TALENT_STRING(Talent_ID):
     Talent = TALENTS[Talent_ID]
     pack = len(tuple(True for i in Talent[2] if CHAR['attr']['values'][i]['value'] > 12))
     Val = 4-(2+CHAR['talents']['TAL_'+str(Talent_ID+1)])//3
-    if pack == 3 and Val < 4:
-        Routine = '({:>+2.0f} QS{:1.0f})'.format(Val, max(1,(CHAR['talents']['TAL_'+str(Talent_ID+1)]/2-1)//3+1))
-    elif pack == 2 and Val < 4:
-        Routine = '({:>+2.0f}!)   '.format(Val)
+    if CNFG['Talent_Routine_Unlock'] == 'True':
+        subpack = sum(max(13 - CHAR['attr']['values'][i]['value'], 0) for i in Talent[2])
+        Val = 4-(2+CHAR['talents']['TAL_'+str(Talent_ID+1)]-3*subpack)//3        
+        if pack == 3 and Val < 4:
+            Routine = '({:>+2.0f} QS{:1.0f})'.format(Val, max(1,(CHAR['talents']['TAL_'+str(Talent_ID+1)]/2-1)//3+1))
+        elif pack == 2 and Val < 4:
+            Routine = '({:>+2.0f}!)   '.format(Val)
+        else:
+            Routine = len('(NN QSN)')*' '
     else:
-        Routine = len('(NN QSN)')*' '
+        if pack == 3 and Val < 4:
+            Routine = '({:>+2.0f} QS{:1.0f})'.format(Val, max(1,(CHAR['talents']['TAL_'+str(Talent_ID+1)]/2-1)//3+1))
+        elif pack == 2 and Val < 4:
+            Routine = '({:>+2.0f}!)   '.format(Val)
+        else:
+            Routine = len('(NN QSN)')*' '
     return '{:20} {}/{}/{} {:>2.0f} {}'.format(Talent[0], ATTR_DECODE[Talent[2][0]], ATTR_DECODE[Talent[2][1]], ATTR_DECODE[Talent[2][2]], CHAR['talents']['TAL_'+str(Talent_ID+1)], Routine)
     
 
