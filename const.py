@@ -13,6 +13,7 @@ FXH = ('Consolas', SCALE*50)
 FXXH = ('Consolas', SCALE*100)
 
 PAD = (1,1)
+TAB_WIDTH = 130//3
 
 FLAG_RUN = True
 
@@ -93,7 +94,26 @@ COMBAT = [  ('Armbrüste',           (4,), 'B', False, 6),
             ('Zweihandhiebwaffen',  (7,), 'C', True, 6),
             ('Zweihandschwerter',   (7,), 'C', True, 6)]
 
+CANTRIPS =  {   7:  ('Lockruf')}
+
+SPELLS =    {   1:  ('Adlerauge',               (1,2,4), '4AsP+2/5min', '2Akt', 'Self', '(A)', 'Heilung', 'B'),
+                4:  ('Axxeleratus',             (1,2,4), '8Asp', '1Akt','Contact', 'QSx5KR', 'Heilung', 'B'),
+                45: ('Wasseratem',              (1,2,6), '4AsP+2/5min', '8Akt', 'Contact', '(A)', 'Verwand.', 'B')}
+
+LITURGIES = {   22: ('Objektsegen',             (0,2,3), '4Kap', '4Akt', 'Contact', 'QSx3h', 'allg', 'B'),
+                48: ('Begnadeter Reiter',       (0,2,3), '8Kap', '2Akt', 'Self', '2h', 'Har', 'A'),
+                68: ('Friedvoller Rausch',      (0,2,3), '8KaP', '8Akt*', '16 m', '2KR', 'Eks', 'B'),
+                79: ('Heiliges Liebesspiel',    (0,2,3), '4KaP', '8Akt', 'Contact', 'QSx30min', 'Eks/Har', 'A'),
+                131:('Berauschender Wein',      (0,2,3), '4KaP', '5min', 'Contact', 'Instant', 'Eks', 'A'),
+                140:('Fest der Freude',         (0,2,3), '8KaP', '30min', 'Self', '6h', 'Eks', 'B')}
+
+BLESSINGS = {   }
+
+SPELL_PREFIXES = {'spells':'SPELL_', 'liturgies':'LITURGY_'}
+SPELL_CATS = {'spells':SPELLS, 'liturgies':LITURGIES}
+
 TEXT_SIZE_TALENT_NAME = 42
+TEXT_SIZE_SPELL_NAME = 80
 
 def TALENT_STRING(Talent_ID):
     Talent = TALENTS[Talent_ID]
@@ -105,18 +125,22 @@ def TALENT_STRING(Talent_ID):
         if pack == 3 and Val < 4:
             Routine = '({:>+2.0f} QS{:1.0f})'.format(Val, max(1,(CHAR['talents']['TAL_'+str(Talent_ID+1)]/2-1)//3+1))
         elif pack == 2 and Val < 4:
-            Routine = '({:>+2.0f}!)   '.format(Val)
+            Routine = '({:>+2.0f}!)'.format(Val)
         else:
-            Routine = len('(NN QSN)')*' '
+            Routine = ''
     else:
         if pack == 3 and Val < 4:
             Routine = '({:>+2.0f} QS{:1.0f})'.format(Val, max(1,(CHAR['talents']['TAL_'+str(Talent_ID+1)]/2-1)//3+1))
         elif pack == 2 and Val < 4:
-            Routine = '({:>+2.0f}!)   '.format(Val)
+            Routine = '({:>+2.0f}!)'.format(Val)
         else:
-            Routine = len('(NN QSN)')*' '
-    return '{:20} {}/{}/{} {:>2.0f} {}'.format(Talent[0], ATTR_DECODE[Talent[2][0]], ATTR_DECODE[Talent[2][1]], ATTR_DECODE[Talent[2][2]], CHAR['talents']['TAL_'+str(Talent_ID+1)], Routine)
+            Routine = ''
+    return '{:^20} {:>2}/{:>2}/{:>2} {:>2} {:<8}'.format(Talent[0], ATTR_DECODE[Talent[2][0]], ATTR_DECODE[Talent[2][1]], ATTR_DECODE[Talent[2][2]], CHAR['talents']['TAL_'+str(Talent_ID+1)], Routine)
     
+def SPELL_STRING(Spell_ID, Spelltype):
+    Spell = SPELL_CATS[Spelltype][Spell_ID]
+    Spell_prefix = SPELL_PREFIXES[Spelltype]
+    return '{:^22} {:>2}/{:>2}/{:>2} {:>2} {:^12} {:^5} {:^8} {:^8}'.format(Spell[0], ATTR_DECODE[Spell[1][0]], ATTR_DECODE[Spell[1][1]], ATTR_DECODE[Spell[1][2]], CHAR[Spelltype][Spell_prefix+str(Spell_ID)], Spell[2], Spell[3], Spell[4], Spell[5])
 
 def load_cnfg():
     global CNFG

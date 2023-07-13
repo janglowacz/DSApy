@@ -8,5 +8,10 @@
 -6,
 6
 ],
-"Talent_Routine_Unlock": false
+"Advantage_Range_Spell": [
+-6,
+6
+],
+"Talent_Routine_Unlock": false,
+"Character": "C:/Users/Jan/Desktop/Everything/P&P/DSA/DSApy/Diruga.json"
 }
