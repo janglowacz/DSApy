@@ -12,8 +12,8 @@ import dsa_talents
 
 printc('===> DSA fastroll <===', Color='Y')
 
-sg.theme('Default1')
-sg.theme_button_color('#dde4ff')
+sg.theme('DarkBlue2')
+sg.theme_button_color((sg.theme_text_color() ,'#20405F'))
 
 Talent_ID = None
 
@@ -52,19 +52,19 @@ layout_tab_talents_2A = [[sg.Text('Talent', key='T_talents_talent', size=(const.
                                     [sg.Text('-', key='T_talents_DR'+str(i), size=(2, 1), font=const.FH, justification='c')]]) for i in range(3)],
                         [sg.Text('', key='T_talents_crit', size=(20, 1), font=const.FH, justification='c')]]
 layout_tab_talents_2B = ([[sg.Text('Adv', font=const.FS, justification='c')]] +
-                            [[sg.Text('{:>+3.0f}'.format(i), size=(8, 1), font=const.FS, pad=(0,0), justification='c')] for i in range(const.ADVANTAGE_RANGE_TALENT[0], const.ADVANTAGE_RANGE_TALENT[1]+1)]
+                            [[sg.Text('{:>+3.0f}'.format(i), size=(8, 1), font=const.FS, pad=(0,0), justification='c')] for i in range(const.CNFG['Advantage_Range_Talent'][0], const.CNFG['Advantage_Range_Talent'][1]+1)]
                             )
 layout_tab_talents_2C = ([[sg.Text('QS', font=const.FS, justification='c')]] +
-                            [[sg.Text('-', key='T_talents_QS_'+str(i), size=(8, 1), font=const.FS, pad=(0,0), justification='c')] for i in range(const.ADVANTAGE_RANGE_TALENT[0], const.ADVANTAGE_RANGE_TALENT[1]+1)]
+                            [[sg.Text('-', key='T_talents_QS_'+str(i), size=(8, 1), font=const.FS, pad=(0,0), justification='c')] for i in range(const.CNFG['Advantage_Range_Talent'][0], const.CNFG['Advantage_Range_Talent'][1]+1)]
                             )
 layout_tab_talents_2D = ([[sg.Text('Succ', font=const.FS, justification='c')]] +
-                            [[sg.Text('-', key='T_talents_succ_'+str(i), size=(8, 1), font=const.FS, pad=(0,0), justification='c')] for i in range(const.ADVANTAGE_RANGE_TALENT[0], const.ADVANTAGE_RANGE_TALENT[1]+1)]
+                            [[sg.Text('-', key='T_talents_succ_'+str(i), size=(8, 1), font=const.FS, pad=(0,0), justification='c')] for i in range(const.CNFG['Advantage_Range_Talent'][0], const.CNFG['Advantage_Range_Talent'][1]+1)]
                             )
 layout_tab_talents_2E = ([[sg.Text('Fail', font=const.FS, justification='c')]] +
-                            [[sg.Text('-', key='T_talents_fail_'+str(i), size=(8, 1), font=const.FS, pad=(0,0), justification='c')] for i in range(const.ADVANTAGE_RANGE_TALENT[0], const.ADVANTAGE_RANGE_TALENT[1]+1)]
+                            [[sg.Text('-', key='T_talents_fail_'+str(i), size=(8, 1), font=const.FS, pad=(0,0), justification='c')] for i in range(const.CNFG['Advantage_Range_Talent'][0], const.CNFG['Advantage_Range_Talent'][1]+1)]
                             )
 layout_tab_talents_2F = ([[sg.Text('Exp QS', font=const.FS, justification='c')]] +
-                            [[sg.Text('-', key='T_talents_exp_'+str(i), size=(8, 1), font=const.FS, pad=(0,0), justification='c')] for i in range(const.ADVANTAGE_RANGE_TALENT[0], const.ADVANTAGE_RANGE_TALENT[1]+1)]
+                            [[sg.Text('-', key='T_talents_exp_'+str(i), size=(8, 1), font=const.FS, pad=(0,0), justification='c')] for i in range(const.CNFG['Advantage_Range_Talent'][0], const.CNFG['Advantage_Range_Talent'][1]+1)]
                             )
 
 layout_tab_talents =    [[sg.Frame(key='F_talents_die_rolling', layout=layout_tab_talents_2A, element_justification='c', vertical_alignment='c', title='Die rolling', title_location='n', font=const.FL),
@@ -84,7 +84,7 @@ layout_tabs = [[sg.Tab(title='Würfel', key='Tab_die', layout=layout_tab_die, el
 layout =    [[sg.Input(key='I_Char_select', visible=False, enable_events=True),
                 sg.FileBrowse('Character', key='B_Char_Select', target=(sg.ThisRow, 0), file_types=(('JSON files','*.json'), ("ALL Files","*.*")), initial_folder=sys.path[0], tooltip='Select character file', font=const.FS),
                 sg.Text(const.CHAR['name'], key='T_Char_select', s=(20,1), font=const.FS),
-                sg.Text('  '.join([const.ATTR_DECODE[i]+':{:>2.0f}'.format(const.CHAR['attr']['values'][i]['value']) for i in range(8)]), key='T_Char_attributes', font=const.FM, justification='c')],
+                sg.Text('    '.join([const.ATTR_DECODE[i]+': {:>2.0f}'.format(const.CHAR['attr']['values'][i]['value']) for i in range(8)]), key='T_Char_attributes', font=const.FM, justification='c')],
             [sg.TabGroup(layout=layout_tabs, key='TabG_Main', font=const.FM)]]
             
 
@@ -100,11 +100,11 @@ def die_roll(Count, Size, Simroll):
     if Simroll:
         for t in range(10):
             roll = np.random.randint(1, Size+1, Count)
-            window['T_die_result_1'].update(', '.join(['{:2.0f}']*Count).format(*roll))
+            window['T_die_result_1'].update(' '.join(['{:2.0f}']*Count).format(*roll))
             window.refresh()
             time.sleep(1/((10-t)*5))
     roll = np.random.randint(1, Size+1, Count)
-    window['T_die_result_1'].update(', '.join(['{:2.0f}']*Count).format(*roll))
+    window['T_die_result_1'].update(' '.join(['{:2.0f}']*Count).format(*roll))
     if Count > 1:
         window['T_die_result_2'].update('Summe: {:.0f}'.format(np.sum(roll)))
     else:
@@ -126,7 +126,7 @@ while const.FLAG_RUN:
         const.store_cnfg()
         const.load_character()
         window['T_Char_select'].update(const.CHAR['name'])
-        window['T_Char_attributes'].update('  '.join([const.ATTR_DECODE[i]+':{:>2.0f}'.format(const.CHAR['attr']['values'][i]['value']) for i in range(8)]))            
+        window['T_Char_attributes'].update('  '.join([const.ATTR_DECODE[i]+': {:>2.0f}'.format(const.CHAR['attr']['values'][i]['value']) for i in range(8)]))            
         for i in range(59):
             window['B_talent_select:'+str(i)].update(const.TALENT_STRING(i))
 
@@ -145,7 +145,7 @@ while const.FLAG_RUN:
             window['F_talents_D'+str(i)].update(const.ATTR_DECODE[const.TALENTS[Talent_ID][2][i]])
             window['T_talents_DA'+str(i)].update('Value: {:>2.0f}'.format(Targets[i]))
 
-        if const.CNFG['Simroll'] == 'True':
+        if const.CNFG['Simroll']:
             for t in range(10):
                 Results = np.random.randint(1, 21, 3)
                 for i in range(3):
@@ -174,7 +174,7 @@ while const.FLAG_RUN:
         else:
             window['T_talents_crit'].update('')      
 
-        for i in range(const.ADVANTAGE_RANGE_TALENT[0], const.ADVANTAGE_RANGE_TALENT[1]+1):
+        for i in range(const.CNFG['Advantage_Range_Talent'][0], const.CNFG['Advantage_Range_Talent'][1]+1):
             Rem = Talent_Value
             for a in range(3):
                 Rem -= max(0, Results[a] - i - Targets[a])
@@ -185,10 +185,10 @@ while const.FLAG_RUN:
             else:
                 window['T_talents_QS_'+str(i)].update(str(max(1,(Rem-1)//3+1)))
 
-        if (not talent_flag) and const.CNFG['Disable_Chances'] == 'False': 
+        if (not talent_flag) and not const.CNFG['Disable_Chances']: 
             window.refresh()
-            talent_simulation = dsa_talents.simulate_talent(const.ADVANTAGE_RANGE_TALENT, Targets, Talent_Value)
-            for i in range(const.ADVANTAGE_RANGE_TALENT[0], const.ADVANTAGE_RANGE_TALENT[1]+1):
+            talent_simulation = dsa_talents.simulate_talent(const.CNFG['Advantage_Range_Talent'], Targets, Talent_Value)
+            for i in range(const.CNFG['Advantage_Range_Talent'][0], const.CNFG['Advantage_Range_Talent'][1]+1):
                 window['T_talents_succ_'+str(i)].update('{:>4.1f}%'.format(talent_simulation[i][0]*100))
                 window['T_talents_fail_'+str(i)].update('{:>4.1f}%'.format(talent_simulation[i][1]*100))
                 window['T_talents_exp_'+str(i)].update('{:>3.1f}'.format(talent_simulation[i][2]))
@@ -196,7 +196,7 @@ while const.FLAG_RUN:
     # ==================================================================== EVENT
     elif 'B_die_' in event:
         pack = event.split('_')[-1].split('W')
-        die_roll(int(pack[0]), int(pack[1]), const.CNFG['Simroll'] == 'True')
+        die_roll(int(pack[0]), int(pack[1]), const.CNFG['Simroll'])
 
     # ==================================================================== EVENT
     else:

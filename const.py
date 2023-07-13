@@ -16,8 +16,6 @@ PAD = (1,1)
 
 FLAG_RUN = True
 
-ADVANTAGE_RANGE_TALENT = (-6, 6)
-
 ATTR_DECODE = ['MU', 'KL', 'IN', 'CH', 'FF', 'GE', 'KO', 'KK']
 
 TALENTS = [ ('Fliegen',                 'Körpertalente', (0,2,5), True, 'B'),
@@ -101,7 +99,7 @@ def TALENT_STRING(Talent_ID):
     Talent = TALENTS[Talent_ID]
     pack = len(tuple(True for i in Talent[2] if CHAR['attr']['values'][i]['value'] > 12))
     Val = 4-(2+CHAR['talents']['TAL_'+str(Talent_ID+1)])//3
-    if CNFG['Talent_Routine_Unlock'] == 'True':
+    if CNFG['Talent_Routine_Unlock']:
         subpack = sum(max(13 - CHAR['attr']['values'][i]['value'], 0) for i in Talent[2])
         Val = 4-(2+CHAR['talents']['TAL_'+str(Talent_ID+1)]-3*subpack)//3        
         if pack == 3 and Val < 4:
@@ -122,20 +120,20 @@ def TALENT_STRING(Talent_ID):
 
 def load_cnfg():
     global CNFG
-    global ADVANTAGE_RANGE_TALENT
-    with open(sys.path[0]+'/cnfg.txt', 'r') as f:
+    with open(sys.path[0]+'/CNFG.json', 'r') as f:
         pack = f.readlines()
-    pack = [x.replace('\n', '').replace(' ', '').split(':') for x in pack]
-    CNFG = {x[0]: ':'.join(x[1:]) for x in pack}
-    ADVANTAGE_RANGE_TALENT = (int(CNFG['Advantage_Range_Talent_Min']), int(CNFG['Advantage_Range_Talent_Max']))
+    CNFG = json.loads(''.join(pack))
     return True
 
 def store_cnfg():
+    global CNFG
+    with open(sys.path[0]+'/CNFG.json', 'w') as f:
+        f.write(json.dumps(CNFG, indent=0))
     return True
 
 def load_character():
     global CHAR
-    with open(CNFG['Character'], 'r') as f:
+    with open(CNFG['Character_File'], 'r') as f:
         pack = f.readlines()
     CHAR = json.loads(''.join(pack))
     return True

@@ -1,0 +1,12 @@
+{
+"Version": "A0.4",
+"Version_full": "A0.4_20230713",
+"Character_File": "C:/Users/Jan/Desktop/Everything/P&P/DSA/DSApy/Theariel.json",
+"Simroll": true,
+"Disable_Chances": false,
+"Advantage_Range_Talent": [
+-6,
+6
+],
+"Talent_Routine_Unlock": false
+}
