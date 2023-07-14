@@ -218,7 +218,7 @@ def die_roll(Count, Size, Simroll):
 
 def set_character():
     global Spelltype, Spellprefix, Spell_IDs
-    printc('> Character file:', const.CNFG['Character'], Color='M')
+    printc('> Character file:', const.CNFG['Character_File'], Color='M')
     printc('{:<16} {}'.format('Character name:', const.CHAR['name']), Color='Grey')
     const.store_cnfg()
     const.load_character()

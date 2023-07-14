@@ -185,8 +185,16 @@ def store_cnfg():
 
 def load_character():
     global CHAR
-    with open(CNFG['Character_File'], 'r') as f:
-        pack = f.readlines()
+    global CNFG
+    try:
+        with open(CNFG['Character_File'], 'r') as f:
+            pack = f.readlines()
+    except FileNotFoundError:
+        printc('> Error in Filepath to Character file, switching to default', Color='R')
+        CNFG['Character_File'] = sys.path[0]+'/Theariel.json'
+        store_cnfg()
+        with open(CNFG['Character_File'], 'r') as f:
+            pack = f.readlines()        
     CHAR = json.loads(''.join(pack))
     return True
 
