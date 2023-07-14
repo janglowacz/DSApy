@@ -1,4 +1,4 @@
-This is DSApy version A0.5
+This is DSApy version B1.0
 
 Features are:
 - Die rolling
