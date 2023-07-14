@@ -4,7 +4,7 @@ Features are:
 - Die rolling
 - Talent rolling
 - Spell & Liturgy rolling
-- Combat rolling
+- Rudimentaray combat rolling
 
 Start the program using "CORE.py".
 
