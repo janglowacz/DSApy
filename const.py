@@ -13,7 +13,7 @@ FXH = ('Consolas', SCALE*50)
 FXXH = ('Consolas', SCALE*100)
 
 PAD = (1,1)
-TAB_WIDTH = 130//3
+TAB_WIDTH = 130//4
 
 FLAG_RUN = True
 
@@ -79,20 +79,26 @@ TALENTS = [ ('Fliegen',                 'Körpertalente', (0,2,5), True, 'B'),
             ('Steinbearbeitung',        'Handwerkstalente', (4,4,7), True, 'A'),
             ('Stoffbearbeitung',        'Handwerkstalente', (1,4,4), True, 'A')]
 
-COMBAT = [  ('Armbrüste',           (4,), 'B', False, 6),
-            ('Bögen',               (4,), 'C', False, 6),
-            ('Wurfwaffen',          (4,), 'B', False, 6),
-            ('Dolche',              (5,), 'B', True, 6),
-            ('Fechtwaffen',         (5,), 'C', True, 6),
-            ('Hiebwaffen',          (7,), 'C', True, 6),
-            ('Kettenwaffen',        (7,), 'C', False, 6),
-            ('Lanzen',              (7,), 'B', True, 6),
-            ('Raufen',              (5,7), 'B', True, 6),
-            ('Schilde',             (7,), 'C', True, 6),
-            ('Schwerter',           (5,7), 'C', True, 6),
-            ('Stangenwaffen',       (5,7), 'C', True, 6),
-            ('Zweihandhiebwaffen',  (7,), 'C', True, 6),
-            ('Zweihandschwerter',   (7,), 'C', True, 6)]
+COMBAT = {  1:  ('Armbrüste',           (4,), 'B', False, 6, 'Ranged', True),
+            2:  ('Bögen',               (4,), 'C', False, 6, 'Ranged', True),
+            3:  ('Dolche',              (5,), 'B', True, 6, 'Melee', True),
+            4:  ('Fechtwaffen',         (5,), 'C', True, 6, 'Melee', True),
+            5:  ('Hiebwaffen',          (7,), 'C', True, 6, 'Melee', True),
+            6:  ('Kettenwaffen',        (7,), 'C', False, 6, 'Melee', True),
+            7:  ('Lanzen',              (7,), 'B', True, 6, 'Melee', True),
+            8:  ('Peitschen',           (4,), 'B', False, 6, 'Melee', False),
+            9:  ('Raufen',              (5,7), 'B', True, 6, 'Melee', True),
+            10: ('Schilde',             (7,), 'C', True, 6, 'Melee', True),
+            11: ('Schleudern',          (5,), 'B', False, 6, 'Ranged', False),
+            12: ('Schwerter',           (5,7), 'C', True, 6, 'Melee', True),
+            13: ('Stangenwaffen',       (5,7), 'C', True, 6, 'Melee', True),
+            14: ('Wurfwaffen',          (4,), 'B', False, 6, 'Ranged', True),
+            15: ('Zweihandhiebwaffen',  (7,), 'C', True, 6, 'Melee', True),
+            17: ('> unknown <',         (5,), 'B', False, 6, 'Ranged', False),
+            16: ('Zweihandschwerter',   (7,), 'C', True, 6, 'Melee', True),
+            18: ('Blasrohre',           (5,), 'B', False, 6, 'Ranged', False),
+            19: ('Diskusse',            (5,), 'B', False, 6, 'Ranged', False),
+            20: ('> unknown <',         (5,), 'B', False, 6, 'Ranged', False)}
 
 CANTRIPS =  {   7:  ('Lockruf')}
 
@@ -141,6 +147,28 @@ def SPELL_STRING(Spell_ID, Spelltype):
     Spell = SPELL_CATS[Spelltype][Spell_ID]
     Spell_prefix = SPELL_PREFIXES[Spelltype]
     return '{:^22} {:>2}/{:>2}/{:>2} {:>2} {:^12} {:^5} {:^8} {:^8}'.format(Spell[0], ATTR_DECODE[Spell[1][0]], ATTR_DECODE[Spell[1][1]], ATTR_DECODE[Spell[1][2]], CHAR[Spelltype][Spell_prefix+str(Spell_ID)], Spell[2], Spell[3], Spell[4], Spell[5])
+
+def COMBAT_STRING(Combat_ID):
+    Combat = COMBAT[Combat_ID]
+    if len(Combat[1]) == 1:
+        Atr = ATTR_DECODE[Combat[1][0]]
+    else:
+        Atr = ATTR_DECODE[Combat[1][0]] + '/' + ATTR_DECODE[Combat[1][1]]
+    if 'CT_'+str(Combat_ID) in CHAR['ct']:
+        Val = CHAR['ct']['CT_'+str(Combat_ID)]
+    else:
+        Val = Combat[4]
+    if Combat[5] == 'Melee':
+        Atk = Val + (CHAR['attr']['values'][0]['value']-8)//3
+    else:
+        Atk = Val + (CHAR['attr']['values'][5]['value']-8)//3
+    if Combat[3]:
+        Pa = Val / 2 + max(((CHAR['attr']['values'][i]['value']-8)//3 for i in Combat[1]))
+        Par = '{:2.0f}'.format(Pa)
+    else:
+        Pa = 0
+        Par = 'X'
+    return '{:^20}  {:>5}  {:>2}  {:>2}  {:>2}'.format(Combat[0], Atr, Val, Atk, Par), (Atk, Pa)
 
 def load_cnfg():
     global CNFG
