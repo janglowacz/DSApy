@@ -102,9 +102,24 @@ COMBAT = {  1:  ('Armbrüste',           (4,), 'B', False, 6, 'Ranged', True),
 
 CANTRIPS =  {   7:  ('Lockruf')}
 
-SPELLS =    {   1:  ('Adlerauge',               (1,2,4), '4AsP+2/5min', '2Akt', 'Self', '(A)', 'Heilung', 'B'),
-                4:  ('Axxeleratus',             (1,2,4), '8Asp', '1Akt','Contact', 'QSx5KR', 'Heilung', 'B'),
-                45: ('Wasseratem',              (1,2,6), '4AsP+2/5min', '8Akt', 'Contact', '(A)', 'Verwand.', 'B')}
+SPELLS =    {   1:  ('Adlerauge',               (1,2,4), '16AsP+2/5min', '2Akt', 'Self', '(A)', 'Hellsicht', 'B'),
+                2:  ('Analys Arkanstruktur',    (1,1,2), '16AsP', '32Akt', 'Contact', 'Instant', 'Heilung', 'C'),
+                3:  ('Armatrutz',               (1,2,4), '4/8/16AsP*', '1Akt', 'Self', 'QSx3min', 'Heilung', 'C'),
+                4:  ('Axxeleratus',             (1,2,4), '8/AsP', '1Akt', 'Contact', 'QSx5KR', 'Heilung', 'B'),
+                5:  ('Balsam Salabunde',        (1,2,4), '1AsP/HP', '16Akt', 'Contact', 'Instant', 'Einfluss', 'B'),
+                6:  ('Bannbaladin',             (0,2,3), '8AsP', '4Akt', '4m', 'QSx3min', 'Hellsicht', 'B'),
+                7:  ('Blick in die Gedanken',   (0,1,2), '8AsP+4/30s', '4Akt', '4m', '(A)', 'Einfluss', 'C'),
+                8:  ('Blitz dich find',         (0,2,3), '4AsP', '1Akt', '8m', 'QS KR', 'Verwand.', 'A'),
+                9:  ('Corpofesso',              (1,2,6), '16AsP', '2Akt', '8m', 'QSx2KR', 'Antimag.', 'C'),
+                10: ('Disruptivo',              (0,1,3), '8AsP+4/5min', '8Akt', 'Self', '(A)', 'Illusion', 'B'),
+                11: ('Duplicatus',              (1,2,3), '4Asp/DG', '2Akt', 'Contact', 'QSx3KR', 'Heilung', 'C'),
+                45: ('Wasseratem',              (1,2,6), '4AsP+2/5min', '8Akt', 'Contact', '(A)', 'Verwand.', 'B'),
+                62: ('Erinnerungsmelodie',      (1,2,2), '1AsP/5min', 'na', 'Self', 'Music', 'Einfluss', 'A'),
+                63: ('Friedenslied',            (0,2,3), '2AsP/5min', 'na', 'QSx3m', 'Music', 'Einfluss', 'A'),
+                64: ('Freundschaftslied',       (2,3,3), '4AsP/h', '3d', 'Audio', 'Permanent', 'Einfluss', 'A'),
+                65: ('Melodie der Kunst',       (2,2,3), '4AsP/h', 'na', 'Self', 'Singing', 'Heilung', 'B'),
+                66: ('Sorgenlied',              (0,2,2), '2AsP/5min', 'na', 'Self', 'Singing', 'Heilsicht', 'A'),
+                67: ('Zaubermelodie',           (0,2,2), '8AsP', '1h', 'Self', '???', 'Heilung', 'B')}
 
 LITURGIES = {   22: ('Objektsegen',             (0,2,3), '4Kap', '4Akt', 'Contact', 'QSx3h', 'allg', 'B'),
                 48: ('Begnadeter Reiter',       (0,2,3), '8Kap', '2Akt', 'Self', '2h', 'Har', 'A'),
